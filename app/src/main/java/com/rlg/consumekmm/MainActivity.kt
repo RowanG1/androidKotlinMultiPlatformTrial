@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.rlg.consumekmm.ui.theme.ConsumeKMMTheme
 import com.rlg.play_kotlin_multi_plat.Greeting
 import com.rlg.play_kotlin_multi_plat.MyScopedClass
+import com.rlg.play_kotlin_multi_plat.SharedVMState
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
@@ -36,7 +37,8 @@ class MainActivity : ComponentActivity() {
         println("Say Hello koin is: ${mySingletonClass.sayHello()}")
 
         setContent {
-            val state by viewModel.state.collectAsState()
+            val state = rememberStateWithFlow(viewModel.state, SharedVMState())
+
             ConsumeKMMTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MainScreen(
