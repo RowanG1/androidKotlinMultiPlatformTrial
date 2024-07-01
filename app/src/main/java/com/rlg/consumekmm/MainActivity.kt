@@ -13,28 +13,19 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rlg.consumekmm.ui.theme.ConsumeKMMTheme
-import com.rlg.play_kotlin_multi_plat.Greeting
-import com.rlg.play_kotlin_multi_plat.MyScopedClass
-import com.rlg.play_kotlin_multi_plat.SharedVMState
-import org.koin.android.ext.android.inject
+import com.rlg.play_kotlin_multi_plat.domain.viewmodels.SharedVMState
 
 class MainActivity : ComponentActivity() {
-    private val mySingletonClass: MyScopedClass by inject()
     private val viewModel: AndroidSharedViewModel = AndroidSharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
-        val hi = Greeting().greet()
-        println("The output is: $hi")
-        println("Say Hello koin is: ${mySingletonClass.sayHello()}")
 
         setContent {
             val state = rememberStateWithFlow(viewModel.state, SharedVMState())

@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.rlg.play_kotlin_multi_plat.CommonFlow
+import com.rlg.play_kotlin_multi_plat.utils.CommonFlow
 
 @Composable
 fun <T> rememberStateWithFlow(flow: CommonFlow<T>, initialValue: T): T {

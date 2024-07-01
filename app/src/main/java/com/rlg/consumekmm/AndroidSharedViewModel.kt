@@ -1,10 +1,9 @@
 package com.rlg.consumekmm
 
 import androidx.lifecycle.ViewModel
-import com.rlg.play_kotlin_multi_plat.CommonFlow
-import com.rlg.play_kotlin_multi_plat.SharedVMState
-import com.rlg.play_kotlin_multi_plat.SharedViewModel
-import kotlinx.coroutines.flow.StateFlow
+import com.rlg.play_kotlin_multi_plat.domain.viewmodels.SharedVMState
+import com.rlg.play_kotlin_multi_plat.domain.viewmodels.SharedViewModel
+import com.rlg.play_kotlin_multi_plat.utils.CommonFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
