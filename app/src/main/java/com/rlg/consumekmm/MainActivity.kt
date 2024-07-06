@@ -7,34 +7,30 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rlg.consumekmm.ui.theme.ConsumeKMMTheme
-import com.rlg.play_kotlin_multi_plat.Greeting
-import com.rlg.play_kotlin_multi_plat.MyScopedClass
-import com.rlg.play_kotlin_multi_plat.SharedVMState
-import org.koin.android.ext.android.inject
+import com.rlg.play_kotlin_multi_plat.domain.viewmodels.SharedVMState
+import com.rlg.play_kotlin_multi_plat.getPlatform
+import com.rlg.play_kotlin_multi_plat.ui.SharedUI.FirstUI
 
 class MainActivity : ComponentActivity() {
-    private val mySingletonClass: MyScopedClass by inject()
     private val viewModel: AndroidSharedViewModel = AndroidSharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
-        val hi = Greeting().greet()
-        println("The output is: $hi")
-        println("Say Hello koin is: ${mySingletonClass.sayHello()}")
 
         setContent {
             val state = rememberStateWithFlow(viewModel.state, SharedVMState())
@@ -67,26 +63,44 @@ fun MainScreen(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.padding(16.dp)) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = getPlatform().name, modifier = Modifier.padding(bottom = 24.dp), style = MaterialTheme.typography.headlineLarge)
+
+        }
         if (isLoading) {
             Text(text = "Loading...")
         } else if (error != null) {
             Text(text = "Error: ${error.message}")
         } else {
-            Text(text = "Data: $data")
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Data: $data")
+                Button(onClick = onFetchData) {
+                    Text(text = "Fetch Data")
+                }
+            }
         }
-        Text(text = "Counter: $counter")
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = onFetchData) {
-            Text(text = "Fetch Data")
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Counter: $counter")
+            Button(onClick = onIncrementCounter) {
+                Text(text = "Increment Counter")
+            }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
-        Button(onClick = onIncrementCounter) {
-            Text(text = "Increment Counter")
-        }
+        FirstUI()
     }
 }
 
